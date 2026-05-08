@@ -31,6 +31,7 @@ export default function Session() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [isStreaming, setIsStreaming] = useState(false);
+  const [streamError, setStreamError] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const generateReport = useGenerateResearchReport();
@@ -59,15 +60,19 @@ export default function Session() {
     const assistantId = Date.now() + 1;
     setMessages((prev) => [...prev, { role: "assistant", content: "", id: assistantId }]);
 
+    setStreamError(null);
+
     try {
-      const response = await fetch(
-        `${import.meta.env.BASE_URL}api/research/sessions/${sessionId}/messages`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ content: userMsg }),
-        }
-      );
+      const response = await fetch("/api/research/sessions/" + sessionId + "/messages", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ content: userMsg }),
+      });
+
+      if (!response.ok) {
+        const errText = await response.text();
+        throw new Error(`Server error ${response.status}: ${errText}`);
+      }
 
       if (!response.body) throw new Error("No response body");
 
@@ -98,7 +103,7 @@ export default function Session() {
               );
             }
           } catch {
-            /* ignore parse errors */
+            /* ignore parse errors on individual SSE chunks */
           }
         }
       }
@@ -111,6 +116,9 @@ export default function Session() {
       });
     } catch (err) {
       console.error("Streaming error:", err);
+      const msg = err instanceof Error ? err.message : "Unknown error";
+      setStreamError(msg);
+      setMessages((prev) => prev.filter((m) => m.id !== assistantId));
     } finally {
       setIsStreaming(false);
     }
@@ -211,6 +219,22 @@ export default function Session() {
             </div>
           </div>
         )}
+
+        {streamError && (
+          <div className="flex justify-start">
+            <div className="bg-destructive/10 border border-destructive/40 mr-12 p-4 rounded-sm font-mono text-sm text-destructive">
+              <p className="font-bold mb-1">TRANSMISSION_ERROR</p>
+              <p className="opacity-80 text-xs">{streamError}</p>
+              <button
+                onClick={() => setStreamError(null)}
+                className="mt-2 text-xs underline opacity-60 hover:opacity-100"
+              >
+                dismiss
+              </button>
+            </div>
+          </div>
+        )}
+
         <div ref={messagesEndRef} />
       </div>
 
