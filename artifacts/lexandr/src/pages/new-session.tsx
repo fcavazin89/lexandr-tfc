@@ -34,30 +34,30 @@ export default function NewSession() {
   return (
     <div className="max-w-3xl mx-auto py-8 animate-in fade-in duration-500">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold font-mono tracking-tight text-foreground">INITIALIZE SESSION</h1>
-        <p className="text-muted-foreground mt-2">Define parameters for the autonomous research protocol.</p>
+        <h1 className="text-3xl font-display font-bold tracking-[0.05em] text-foreground">INITIALIZE SESSION</h1>
+        <p className="text-muted-foreground mt-2 font-sans">Define parameters for the autonomous research protocol.</p>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-8 bg-card border border-border p-8 rounded-sm">
+      <form onSubmit={handleSubmit} className="space-y-8 glass-card p-8 rounded-sm">
         <div className="space-y-2">
-          <label className="text-sm font-mono text-muted-foreground uppercase">Research Topic</label>
+          <label className="text-[10px] font-display text-muted-foreground uppercase tracking-[0.15em]">Research Topic</label>
           <input 
             type="text"
             value={topic}
             onChange={(e) => setTopic(e.target.value)}
             placeholder="e.g. Zero-Knowledge Proofs in DAO Governance"
-            className="w-full bg-background border border-border rounded-sm px-4 py-3 text-foreground focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary transition-all font-mono"
+            className="w-full bg-background/80 border border-border rounded-sm px-4 py-3 text-foreground focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary transition-all font-sans placeholder:text-muted-foreground/50"
             required
           />
         </div>
 
         <div className="space-y-2">
-          <label className="text-sm font-mono text-muted-foreground uppercase">Primary Domain</label>
+          <label className="text-[10px] font-display text-muted-foreground uppercase tracking-[0.15em]">Primary Domain</label>
           <div className="relative">
             <select
               value={domain}
               onChange={(e) => setDomain(e.target.value)}
-              className="w-full bg-background border border-border rounded-sm px-4 py-3 text-foreground appearance-none focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary transition-all font-mono"
+              className="w-full bg-background/80 border border-border rounded-sm px-4 py-3 text-foreground appearance-none focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary transition-all font-sans"
             >
               {domains.map((d) => (
                 <option key={d} value={d}>{d}</option>
@@ -70,12 +70,12 @@ export default function NewSession() {
         </div>
 
         <div className="space-y-2">
-          <label className="text-sm font-mono text-muted-foreground uppercase">Context & Parameters (Optional)</label>
+          <label className="text-[10px] font-display text-muted-foreground uppercase tracking-[0.15em]">Context & Parameters (Optional)</label>
           <textarea 
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             placeholder="Provide specific constraints, focus areas, or initial hypotheses..."
-            className="w-full bg-background border border-border rounded-sm px-4 py-3 text-foreground min-h-[120px] focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary transition-all font-mono resize-y"
+            className="w-full bg-background/80 border border-border rounded-sm px-4 py-3 text-foreground min-h-[120px] focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary transition-all font-sans placeholder:text-muted-foreground/50 resize-y"
           />
         </div>
 
@@ -83,7 +83,7 @@ export default function NewSession() {
           <button 
             type="submit"
             disabled={createSession.isPending || !topic}
-            className="flex items-center gap-2 bg-primary text-primary-foreground px-6 py-3 rounded-sm font-medium hover:bg-primary/90 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+            className="flex items-center gap-2 bg-primary text-primary-foreground px-6 py-3 rounded-sm font-display text-xs tracking-wider hover:bg-primary/90 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {createSession.isPending ? (
               <span className="flex items-center gap-2">

@@ -21,10 +21,10 @@ export default function ReportDetail() {
   if (isLoading) {
     return (
       <div className="max-w-4xl mx-auto py-20 flex flex-col items-center justify-center">
-        <div className="w-12 h-12 rounded border border-primary/50 bg-primary/10 flex items-center justify-center mb-6 animate-pulse">
+        <div className="w-12 h-12 rounded-sm border border-primary/50 bg-primary/10 flex items-center justify-center mb-6 animate-pulse shadow-[0_0_12px_rgba(208,188,255,0.2)]">
           <Fingerprint className="w-6 h-6 text-primary" />
         </div>
-        <h2 className="text-xl font-mono text-foreground uppercase tracking-widest">DECRYPTING INTEL...</h2>
+        <h2 className="text-xl font-display text-foreground uppercase tracking-[0.15em]">DECRYPTING INTEL...</h2>
       </div>
     );
   }
@@ -32,9 +32,9 @@ export default function ReportDetail() {
   if (error || !report) {
     return (
       <div className="max-w-4xl mx-auto py-20 text-center border border-dashed border-destructive/50 rounded-sm bg-destructive/5">
-        <h2 className="text-xl font-mono text-destructive uppercase tracking-widest mb-2">ACCESS_DENIED</h2>
-        <p className="text-muted-foreground">Report could not be retrieved or does not exist.</p>
-        <Link href="/reports" className="text-primary mt-4 inline-block hover:underline font-mono text-sm">
+        <h2 className="text-xl font-display text-destructive uppercase tracking-[0.15em] mb-2">ACCESS_DENIED</h2>
+        <p className="text-muted-foreground font-sans">Report could not be retrieved or does not exist.</p>
+        <Link href="/reports" className="text-primary mt-4 inline-block hover:underline font-display text-xs tracking-wider">
           RETURN_TO_ARCHIVE
         </Link>
       </div>
@@ -56,32 +56,32 @@ export default function ReportDetail() {
     <div className="max-w-5xl mx-auto pb-12 animate-in fade-in duration-500">
       <Link
         href="/reports"
-        className="inline-flex items-center gap-2 text-sm font-mono text-muted-foreground hover:text-primary transition-colors mb-6 group"
+        className="inline-flex items-center gap-2 text-xs font-display tracking-wider text-muted-foreground hover:text-primary transition-colors mb-6 group"
       >
         <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
         BACK_TO_ARCHIVE
       </Link>
 
-      <div className="bg-card border border-border rounded-sm overflow-hidden mb-8">
-        <div className="border-b border-border p-8 bg-secondary/30 relative overflow-hidden">
+      <div className="glass-card rounded-sm overflow-hidden mb-8">
+        <div className="border-b border-border/50 p-8 bg-gradient-to-b from-primary/5 to-transparent relative overflow-hidden">
           <div className="absolute top-0 right-0 p-8 opacity-5">
-            <Fingerprint className="w-32 h-32" />
+            <Fingerprint className="w-32 h-32 text-primary" />
           </div>
 
           <div className="flex flex-wrap items-center gap-3 mb-6 relative z-10">
-            <span className="bg-primary/20 text-primary border border-primary/30 px-3 py-1 rounded-sm text-xs font-mono tracking-widest">
+            <span className="bg-primary/15 text-primary micro-border px-3 py-1 rounded-sm text-[10px] font-display tracking-[0.15em]">
               REPORT #{report.id}
             </span>
-            <span className="bg-card text-foreground border border-border px-3 py-1 rounded-sm text-xs font-mono tracking-widest uppercase">
+            <span className="glass-card text-foreground micro-border px-3 py-1 rounded-sm text-[10px] font-display tracking-[0.15em] uppercase">
               {report.domain}
             </span>
-            <span className="text-xs text-muted-foreground font-mono flex items-center gap-1.5 ml-auto">
+            <span className="text-[10px] text-muted-foreground font-display tracking-wider flex items-center gap-1.5 ml-auto">
               <Clock className="w-3.5 h-3.5" />
               {format(new Date(report.createdAt), "MMMM dd, yyyy HH:mm")}
             </span>
           </div>
 
-          <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4 leading-tight relative z-10">
+          <h1 className="text-3xl md:text-4xl font-display font-bold text-foreground mb-4 leading-tight relative z-10 tracking-[0.02em]">
             {report.topic}
           </h1>
         </div>
@@ -89,8 +89,8 @@ export default function ReportDetail() {
         <div className="p-8 space-y-12">
           {sections.map((section, idx) => (
             <div key={idx} className="space-y-4">
-              <h2 className="flex items-center gap-3 text-lg font-mono font-bold tracking-widest text-primary border-b border-border/50 pb-2 uppercase">
-                <section.icon className="w-5 h-5 opacity-70" />
+              <h2 className="flex items-center gap-3 text-sm font-display font-bold tracking-[0.1em] text-primary border-b border-border/30 pb-2 uppercase">
+                <section.icon className="w-4 h-4 opacity-70" />
                 {section.title}
               </h2>
               <div className="prose prose-invert max-w-none prose-p:text-muted-foreground prose-headings:text-foreground prose-a:text-primary font-sans">

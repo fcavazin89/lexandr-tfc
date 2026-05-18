@@ -138,7 +138,7 @@ export default function Session() {
 
   return (
     <div className="flex flex-col h-full animate-in fade-in duration-500 max-w-5xl mx-auto w-full">
-      <div className="flex items-center justify-between pb-4 border-b border-border mb-4">
+      <div className="flex items-center justify-between pb-4 border-b border-border/50 mb-4">
         <div>
           <div className="flex items-center gap-2 mb-1">
             <button
@@ -147,24 +147,24 @@ export default function Session() {
             >
               <ArrowLeft className="w-4 h-4" />
             </button>
-            <span className="bg-primary/20 text-primary border border-primary/30 px-2 py-0.5 rounded-sm text-xs font-mono">
+            <span className="bg-primary/10 text-primary micro-border px-2 py-0.5 rounded-sm text-[10px] font-display tracking-wider">
               SESSION #{sessionId}
             </span>
-            <span className="text-muted-foreground text-sm font-mono flex items-center gap-1">
+            <span className="text-muted-foreground text-xs font-display tracking-wider flex items-center gap-1">
               <Activity className="w-3 h-3" /> ACTIVE
             </span>
           </div>
-          <h1 className="text-xl font-bold text-foreground mt-1">
+          <h1 className="text-xl font-display font-bold text-foreground mt-1 tracking-[0.03em]">
             {session?.topic ?? "Research Session"}
           </h1>
           {session?.domain && (
-            <span className="text-xs font-mono text-muted-foreground">{session.domain}</span>
+            <span className="text-[10px] font-display tracking-wider text-muted-foreground">{session.domain}</span>
           )}
         </div>
         <button
           onClick={handleGenerateReport}
           disabled={generateReport.isPending || messages.length === 0}
-          className="flex items-center gap-2 bg-secondary text-secondary-foreground border border-border px-3 py-1.5 rounded-sm text-sm font-mono hover:bg-secondary/80 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          className="flex items-center gap-2 bg-secondary text-secondary-foreground micro-border px-3 py-1.5 rounded-sm text-xs font-display tracking-wider hover:bg-secondary/80 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {generateReport.isPending ? (
             <RefreshCw className="w-4 h-4 animate-spin" />
@@ -178,10 +178,10 @@ export default function Session() {
       <div className="flex-1 overflow-y-auto pr-2 space-y-6 pb-4">
         {messages.length === 0 && (
           <div className="h-full flex flex-col items-center justify-center text-muted-foreground py-20">
-            <Database className="w-12 h-12 mb-4 opacity-20" />
-            <p className="font-mono text-sm uppercase tracking-widest">Protocol Ready. Awaiting Input.</p>
+            <Database className="w-12 h-12 mb-4 opacity-20 text-primary" />
+            <p className="font-display text-xs uppercase tracking-[0.2em]">Protocol Ready. Awaiting Input.</p>
             {session?.description && (
-              <p className="text-xs text-muted-foreground mt-3 max-w-md text-center">{session.description}</p>
+              <p className="text-xs text-muted-foreground mt-3 max-w-md text-center font-sans">{session.description}</p>
             )}
           </div>
         )}
@@ -192,10 +192,10 @@ export default function Session() {
               className={`max-w-[85%] ${
                 msg.role === "user"
                   ? "bg-primary text-primary-foreground ml-12"
-                  : "bg-card border border-border mr-12"
+                  : "glass-card mr-12"
               } p-4 rounded-sm`}
             >
-              <div className="text-xs font-mono mb-2 opacity-70 uppercase">
+              <div className="text-[10px] font-display tracking-wider mb-2 opacity-70 uppercase">
                 {msg.role === "user" ? "USER_INPUT" : "LEXANDR_OUTPUT"}
               </div>
               <div
@@ -213,7 +213,7 @@ export default function Session() {
 
         {isStreaming && messages[messages.length - 1]?.content === "" && (
           <div className="flex justify-start">
-            <div className="bg-card border border-border mr-12 p-4 rounded-sm flex items-center gap-3 text-primary font-mono text-sm">
+            <div className="glass-card mr-12 p-4 rounded-sm flex items-center gap-3 text-primary font-display text-xs tracking-wider">
               <RefreshCw className="w-4 h-4 animate-spin" />
               PROCESSING_DATA...
             </div>
@@ -222,9 +222,9 @@ export default function Session() {
 
         {streamError && (
           <div className="flex justify-start">
-            <div className="bg-destructive/10 border border-destructive/40 mr-12 p-4 rounded-sm font-mono text-sm text-destructive">
+            <div className="bg-destructive/10 micro-border border-destructive/40 mr-12 p-4 rounded-sm font-display text-xs tracking-wider text-destructive">
               <p className="font-bold mb-1">TRANSMISSION_ERROR</p>
-              <p className="opacity-80 text-xs">{streamError}</p>
+              <p className="opacity-80 text-xs font-sans">{streamError}</p>
               <button
                 onClick={() => setStreamError(null)}
                 className="mt-2 text-xs underline opacity-60 hover:opacity-100"
@@ -238,7 +238,7 @@ export default function Session() {
         <div ref={messagesEndRef} />
       </div>
 
-      <div className="pt-4 border-t border-border mt-auto">
+      <div className="pt-4 border-t border-border/50 mt-auto">
         <form onSubmit={handleSubmit} className="relative">
           <textarea
             value={input}
@@ -250,7 +250,7 @@ export default function Session() {
               }
             }}
             placeholder="Enter research query or hypothesis..."
-            className="w-full bg-background border border-border rounded-sm pl-4 pr-14 py-4 text-foreground focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary transition-all font-mono resize-none min-h-[80px]"
+            className="w-full bg-background/80 border border-border rounded-sm pl-4 pr-14 py-4 text-foreground focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary transition-all font-sans resize-none min-h-[80px] placeholder:text-muted-foreground/50"
             disabled={isStreaming}
             rows={3}
           />
@@ -262,7 +262,7 @@ export default function Session() {
             <Send className="w-4 h-4" />
           </button>
         </form>
-        <p className="text-xs text-muted-foreground text-center mt-2 font-mono">
+        <p className="text-[10px] text-muted-foreground text-center mt-2 font-display tracking-wider">
           LEXANDR — Autonomous Research Intelligence · Verify all outputs independently
         </p>
       </div>
